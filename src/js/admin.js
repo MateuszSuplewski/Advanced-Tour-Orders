@@ -7,6 +7,8 @@ const api = new ExcursionsAPI('http://localhost:3000/excursions')
 const init = () => {
     load()
     add()
+    remove()
+    update()
 }
 
 document.addEventListener('DOMContentLoaded', init)
@@ -37,7 +39,56 @@ const add = () => {
     })
 }
 
+const remove = () => {
+    const panelEl = findExcursionsPanel()
 
+    panelEl.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        if (isElementContainingClass(e.target, 'excursions__field-input--remove')) {
+            const excursionEl = e.target.parentElement.parentElement.parentElement
+            const id = excursionEl.dataset.id
+
+            api.removeData(id)
+                .catch(error => console.log("error", error))
+                .finally(() => load())
+        }
+    })
+}
+
+const update = () => {
+    const panelEl = findExcursionsPanel()
+
+    panelEl.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        if (isElementContainingClass(e.target, 'excursions__field-input--update')) {
+            const excursionEl = e.target.parentElement.parentElement.parentElement
+            const elListInsideExcursion = findElementsInsideExcursion(excursionEl)
+            const isEditable = [...elListInsideExcursion].every(element => element.isContentEditable)
+
+            if (isEditable) {
+                const id = excursionEl.dataset.id
+                const data = getExcursionData(elListInsideExcursion)
+
+                api.updateData(id, data)
+                    .catch(error => console.log("error", error))
+                    .finally(() => {
+                        e.target.value = 'edytuj'
+                        elListInsideExcursion.forEach(element => element.contentEditable = false)
+                    })
+            }
+            else {
+                e.target.value = 'zapisz'
+                elListInsideExcursion.forEach(element => element.contentEditable = true)
+            }
+        }
+    })
+}
+
+const isElementContainingClass = (element, className) => {
+    return element.classList.contains(className)
+}
 
 const findExcursionsPanel = () => {
     return document.querySelector('.panel__excursions')
@@ -52,4 +103,21 @@ const getFormData = (form) => {
         adultPrice: adultPrice.value,
         childrenPrice: childrenPrice.value
     }
+}
+
+const getExcursionData = (elements) => {
+    const [title, description, adultPrice, childrenPrice] = elements
+    return {
+        title: title.innerText,
+        description: description.innerText,
+        adultPrice: adultPrice.innerText,
+        childrenPrice: childrenPrice.innerText
+    }
+}
+
+const findElementsInsideExcursion = (excursion) => {
+    const titleEl = excursion.querySelector('.excursions__title')
+    const descriptionEl = excursion.querySelector('.excursions__description')
+    const pricesElList = excursion.querySelectorAll('.excursions__price')
+    return [titleEl, descriptionEl, ...pricesElList]
 }
