@@ -8,6 +8,7 @@ const api = new ExcursionsAPI('http://localhost:3000');
 const init = () => {
     load()
     addExcursionToCart()
+    removeExcursionFromCart()
 }
 
 document.addEventListener('DOMContentLoaded', init);
@@ -42,9 +43,9 @@ const addExcursionToCart = () => {
             clearExcursionErrors(e.target)
 
             const cartEl = findCart()
-            const excursionSummaryEl = createCartItemFromPrototype(cartEl)
-            const summaryItem = findCartItemElements(excursionSummaryEl)
-            const { titleEl, priceEl, totalPriceEl } = summaryItem
+            const cartItem = createCartItemFromPrototype(cartEl)
+            const cartItemElList = findCartItemElements(cartItem)
+            const { titleEl, priceEl, totalPriceEl } = cartItemElList
 
             titleEl.innerText = title
             priceEl.innerText = `dorośli: ${adultsTickets} x ${adultsPrice}PLN, dzieci: ${childrenTickets} x ${childrenPrice}PLN`
@@ -55,6 +56,21 @@ const addExcursionToCart = () => {
             showExcursionErrors(e.target, errors)
         }
     });
+}
+
+
+function removeExcursionFromCart() {
+    const cartEl = findCart()
+
+    cartEl.addEventListener('click', (e) => {
+        e.preventDefault()
+        if (isElementContainingClass(e.target, 'summary__btn-remove')) {
+
+            const cartItem = e.target.parentElement.parentElement
+            cartItem.remove()
+            updateTotalPrice()
+        }
+    })
 }
 
 const findExcursionsPanel = () => {
@@ -120,7 +136,7 @@ const calculateExcursionPrice = (priceElList, ...ticketElList) => {
     return `${totalPrice}PLN`
 }
 
-function updateTotalPrice() { // Clean
+function updateTotalPrice() {
     const cartEl = findCart()
     const summaryPriceElList = Array.from(cartEl.querySelectorAll('.summary__total-price'))
     const totalPriceEl = document.querySelector('.order__total-price-value')
@@ -134,11 +150,11 @@ function updateTotalPrice() { // Clean
 }
 
 const showExcursionErrors = (form, errors) => {
-    let ul = form.querySelector('ul');
+    let ul = form.querySelector('ul')
     if (!ul) {
         const newErrorList = document.createElement('ul')
-        form.appendChild(newErrorList);
-        ul = form.querySelector('ul');
+        form.appendChild(newErrorList)
+        ul = form.querySelector('ul')
     }
 
     ul.innerHTML = ''
@@ -153,3 +169,6 @@ const convertToNumber = (value) => {
     return Number(value)
 }
 
+const isElementContainingClass = (element, className) => {
+    return element.classList.contains(className)
+}
