@@ -43,3 +43,7 @@ ul {
     margin-bottom: 20px;
     padding-bottom: 20px;
 }
+
+.summary__item--prototype, .excursions__item--prototype{
+    display: none;
+}

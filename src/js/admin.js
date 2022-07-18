@@ -32,7 +32,7 @@ const add = () => {
     formEl.addEventListener('submit', (e) => {
         e.preventDefault()
         const data = getFormData(e.target)
-
+        clearForm(e.target)
         api.addData(data)
             .catch(error => console.log("error", error))
             .finally(() => load())
@@ -120,4 +120,12 @@ const findElementsInsideExcursion = (excursion) => {
     const descriptionEl = excursion.querySelector('.excursions__description')
     const pricesElList = excursion.querySelectorAll('.excursions__price')
     return [titleEl, descriptionEl, ...pricesElList]
+}
+
+const clearForm = (form) => {
+    const { title, description, adultPrice, childrenPrice } = form.elements
+    title.value = ''
+    description.value = ''
+    adultPrice.value = ''
+    childrenPrice.value = ''
 }

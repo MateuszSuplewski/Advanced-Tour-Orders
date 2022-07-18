@@ -1,4 +1,53 @@
 {
-    "excursions": [],
-    "orders": []
+  "excursions": [
+    {
+      "title": "Poznaj Tokio",
+      "description": "Zwiedzanie narodowego Muzeum sztuki współczesnej Tokio",
+      "adultPrice": "35",
+      "childrenPrice": "17",
+      "id": 1
+    },
+    {
+      "title": "Pałac Gyeongbokgung",
+      "description": "Oprowadzanie przez przewodnika po jednym z największych i najbardziej spektakularnych pałaców w Seulu",
+      "adultPrice": "70",
+      "childrenPrice": "45",
+      "id": 2
+    },
+    {
+      "title": "Pływające Zhujiajiao",
+      "description": "Udaj się do najstarszego miasta wodnego w Chinach!\nPodziwiaj kanały oraz rzeki otaczające wioskę\n",
+      "adultPrice": "400",
+      "childrenPrice": "250",
+      "id": 3
+    },
+    {
+      "title": "Agora Rzymska",
+      "description": "Poznaj antyczne kompleksy ruin w centrum stolicy Grecji",
+      "adultPrice": "36",
+      "childrenPrice": "12",
+      "id": 4
+    }
+  ],
+  "orders": [
+    {
+      "name": "Paloma Wozniak",
+      "email": "paloma.wozniak@interia.pl",
+      "totalPrice": "171PLN",
+      "details": [
+        "Poznaj Tokio, 87PLN, dorośli: 2 x 35PLN, dzieci: 1 x 17PLN",
+        "Agora Rzymska, 84PLN, dorośli: 2 x 36PLN, dzieci: 1 x 12PLN"
+      ],
+      "id": 1
+    },
+    {
+      "name": "Mateusz Suplewski",
+      "email": "mateuszSuplewski@onet.pl",
+      "totalPrice": "415PLN",
+      "details": [
+        "Pałac Gyeongbokgung, 415PLN, dorośli: 4 x 70PLN, dzieci: 3 x 45PLN"
+      ],
+      "id": 2
+    }
+  ]
 }
