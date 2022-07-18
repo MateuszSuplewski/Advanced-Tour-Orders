@@ -2,7 +2,7 @@ import './../css/admin.css'
 import ExcursionsAPI from './ExcursionsAPI'
 import ExcursionsLoader from './ExcursionsLoader'
 
-const api = new ExcursionsAPI('http://localhost:3000/excursions')
+const api = new ExcursionsAPI('http://localhost:3000')
 
 const init = () => {
     load()

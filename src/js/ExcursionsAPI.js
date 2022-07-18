@@ -3,27 +3,27 @@ class ExcursionsAPI {
         this.API_URL = API_URL
     }
 
-    loadData() {
-        return this._fetch()
+    loadData(dataPath) {
+        return this._fetch(dataPath)
     }
 
-    addData(data) {
+    addData(data, dataPath) {
         const options = { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } }
-        return this._fetch(options)
+        return this._fetch(dataPath, options)
     }
 
-    removeData(id) {
+    removeData(id, dataPath) {
         const options = { method: 'DELETE' }
-        return this._fetch(options, `/${id}`)
+        return this._fetch(dataPath, options, `/${id}`)
     }
 
-    updateData(id, data) {
+    updateData(id, data, dataPath) {
         const options = { method: 'PUT', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } }
-        return this._fetch(options, `/${id}`)
+        return this._fetch(dataPath, options, `/${id}`)
     }
 
-    _fetch(options, additionalPath = '') {
-        const url = `${this.API_URL}${additionalPath}`
+    _fetch(dataPath = 'excursions', options, additionalPath = '') {
+        const url = `${this.API_URL}/${dataPath}${additionalPath}`
         return fetch(url, options)
             .then(response => {
                 if (response.ok) return response.json()
